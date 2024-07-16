@@ -1,6 +1,6 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local notify = Config.Notify -- qb or ox
-local logs = true
+local logs = false 
 local logapi = 'insert string here'
 local endpoint = 'https://api.fivemerr.com/v1/logs'
 local headers = {
@@ -8,6 +8,7 @@ local headers = {
             ['Content-Type'] = 'application/json',
     }
 function Log(message, type)
+if logs == false then return end	
     local buffer = {
         level = "info",
         message = message,
