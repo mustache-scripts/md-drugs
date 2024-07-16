@@ -7,6 +7,7 @@ local playerPed = GetPlayerPed(source)
 	if CheckDist(source, playerPed, Config.lysergicacid[num]['loc']) then return end
 	if AddItem('lysergic_acid', 2) then
 		Notifys(Lang.lsd.lys, "success")
+		Log(Player.PlayerData.charinfo.firstname .. ' ' ..  Player.PlayerData.charinfo.lastname .. ' Got Lysergic acid with a distance of ' .. dist(source, playerPed, Config.lysergicacid[num]['loc']) .. '!', 'lsd')
 	end
 end)
 
@@ -17,6 +18,7 @@ local playerPed = GetPlayerPed(source)
 	if CheckDist(source, playerPed, Config.diethylamide[num]['loc']) then return end
 	if AddItem('diethylamide', 2) then 
 		Notifys(Lang.lsd.die, "success")
+		Log(Player.PlayerData.charinfo.firstname .. ' ' ..  Player.PlayerData.charinfo.lastname .. ' Got Diethylamide with a distance of ' .. dist(source, playerPed, Config.diethylamide[num]['loc']) .. '!', 'lsd')
 	end
 end)
 
@@ -59,6 +61,8 @@ local Player = QBCore.Functions.GetPlayer(src)
 		RemoveItem('lysergic_acid', 1)  
 		AddItem('lsd_one_vial', 1)
 		Notifys(Lang.lsd.madelsd, "success")
+		Log(Player.PlayerData.charinfo.firstname .. ' ' ..  Player.PlayerData.charinfo.lastname .. ' Heated Basic LSD!', 'lsd')
+	
 end)
 
 RegisterServerEvent('md-drugs:server:failheating', function()
@@ -68,6 +72,7 @@ local Player = QBCore.Functions.GetPlayer(src)
 	RemoveItem('diethylamide', 1)  
 	RemoveItem('lysergic_acid', 1)  
 	Notifys(Lang.lsd.failed, "error")
+	Log(Player.PlayerData.charinfo.firstname .. ' ' ..  Player.PlayerData.charinfo.lastname .. ' Failed Basic LSD Like An Idiot!', 'lsd')
 end)
 
 
@@ -96,6 +101,7 @@ if not Itemcheck(Player, 'lsd_one_vial', 1, 'true') then return end
 				Notifys(Lang.lsd.refined, "Success")
 			end
 			Player.Functions.SetMetaData('lsd', (lsd + 1))
+			Log(Player.PlayerData.charinfo.firstname .. ' ' ..  Player.PlayerData.charinfo.lastname .. ' Refined Acid and Now Has A Rep Of ' .. lsd + 1 .. '!', 'lsd')
 		end
 	else
 		if RemoveItem('lsd_one_vial', 1) then 
@@ -115,6 +121,7 @@ if not Itemcheck(Player, 'lsd_one_vial', 1, 'true') then return end
 				AddItem('lsd_vial_six', 1)
 				Notifys(Lang.lsd.refined, "Success")
 			end
+			Log(Player.PlayerData.charinfo.firstname .. ' ' ..  Player.PlayerData.charinfo.lastname .. ' Refined Acid!', 'lsd')
 		end
 	end
 end)
@@ -126,6 +133,7 @@ local randomchance = math.random(1,100)
 if not Itemcheck(Player, 'lsd_one_vial', 1, 'true') then return end
 	if RemoveItem('lsd_one_vial', 1) then 
 		Player.Functions.SetMetaData('lsd', (Player.PlayerData.metadata.lsd - 1))
+		Log(Player.PlayerData.charinfo.firstname .. ' ' ..  Player.PlayerData.charinfo.lastname .. ' Failed A Refinement And Now Has A Rep Of ' .. Player.PlayerData.metadata.lsd - 1 .. '!', 'lsd')
 		if Player.PlayerData.metadata.lsd < 0 then Player.Functions.SetMetaData('lsd', 0) end
 	end
 end)
@@ -138,6 +146,7 @@ RegisterServerEvent('md-drugs:server:gettabpaper', function(num)
 	if CheckDist(source, playerPed, Config.gettabs[num]['loc']) then return end
 	if Player.Functions.RemoveMoney('cash', Config.tabcost * 10) then
 		AddItem('tab_paper', 10)
+		Log(Player.PlayerData.charinfo.firstname .. ' ' ..  Player.PlayerData.charinfo.lastname .. ' Bought Tab Paper!', 'lsd')
 	else
 		Notifys(Lang.lsd.broke, "error")
 	end
@@ -150,6 +159,7 @@ RegisterServerEvent('md-drugs:server:getlabkit', function()
 	if CheckDist(source, playerPed, vector3(Config.buylsdlabkit.x, Config.buylsdlabkit.y, Config.buylsdlabkit.z)) then return end
 	if Player.Functions.RemoveMoney('cash', Config.lsdlabkitcost) then
 		AddItem('lsdlabkit', 1)
+		Log(Player.PlayerData.charinfo.firstname .. ' ' ..  Player.PlayerData.charinfo.lastname .. ' Bought A LSD Lab Kit!', 'lsd')
 	else
 		Notifys(Lang.lsd.broke, "error")
 	end
@@ -202,6 +212,7 @@ for k, v in pairs (sheets) do
 		if Player.Functions.RemoveItem(v.item, 1) then
 			Player.Functions.AddItem(v.recieve, math)
 			TriggerClientEvent("inventory:client:ItemBox", src, QBCore.Shared.Items[v.recieve], "add", math )
+			Log(Player.PlayerData.charinfo.firstname .. ' ' ..  Player.PlayerData.charinfo.lastname .. ' Made ' .. math .. 'Tabs of ' .. v.recieve .. '!', 'lsd')
 		end
 	end)
 end

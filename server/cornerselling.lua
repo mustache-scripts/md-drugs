@@ -3,7 +3,7 @@ local StolenDrugs = {}
 
 
 
-lib.callback.register('md-drugs:server:cornerselling:getAvailableDrugs', function(source, cb)
+QBCore.Functions.CreateCallback('md-drugs:server:cornerselling:getAvailableDrugs', function(source, cb)
     local AvailableDrugs = {}
     local Player = QBCore.Functions.GetPlayer(source)
     if not Player then return nil end
@@ -12,11 +12,12 @@ lib.callback.register('md-drugs:server:cornerselling:getAvailableDrugs', functio
         local item = Player.Functions.GetItemByName(k)
         if item and type == 0 then
             type = type + 1
-            return item.name, item.amount
+            Log(Player.PlayerData.charinfo.firstname .. ' ' ..  Player.PlayerData.charinfo.lastname .. ' Allowed To Sell ' .. item.name .. '!' , 'cornerselling')
+            cb(item.name, item.amount)
         end
     end
     if type == 0 then 
-        return 'nothing', 0
+        cb('nothing', 0)
     end
 end)
 
@@ -26,6 +27,7 @@ RegisterNetEvent('md-drugs:server:sellCornerDrugs', function(item, amount, price
     local Player = QBCore.Functions.GetPlayer(src)
   
     if RemoveItem(item, amount) then
+        Log(Player.PlayerData.charinfo.firstname .. ' ' ..  Player.PlayerData.charinfo.lastname .. ' Sold ' .. amount .. ' Of ' .. item .. '!' , 'cornerselling')
         if QBConfig.MarkedBills then
             if price  >= QBConfig.DrugsPrice[item]['min'] * amount and price  <= QBConfig.DrugsPrice[item]['max'] * amount then 
                 local info = {

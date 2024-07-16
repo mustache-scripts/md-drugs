@@ -32,6 +32,7 @@ AddEventHandler("shrooms:pickupCane", function(loc)
         shroomsCooldown(loc)
         local Player = QBCore.Functions.GetPlayer(source)
         AddItem('shrooms', 1)
+        Log(Player.PlayerData.charinfo.firstname .. ' ' ..  Player.PlayerData.charinfo.lastname .. ' Picked A Shroom With a distance of ' .. dist(source, playerPed, Config.shrooms[loc].location) .. ' vectors', 'shrooms')
     end
 end)
 
@@ -41,6 +42,7 @@ local Player = QBCore.Functions.GetPlayer(src)
 
 if TriggerClientEvent('md-drugs:client:takeshrooms', src, item.name) then
 	Player.Functions.RemoveItem('shrooms', 1)
+    Log(Player.PlayerData.charinfo.firstname .. ' ' ..  Player.PlayerData.charinfo.lastname .. 'Took Some Mushrooms', 'shrooms')
     TriggerClientEvent("QBCore:Notify", src, Lang.Shrooms.trip, 'success')
 	end
 end)
