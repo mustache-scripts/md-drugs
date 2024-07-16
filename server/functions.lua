@@ -67,7 +67,18 @@ function CheckDist(source,Player, coords)
     else    
         DropPlayer(source, 'Too Far') return  end
 end
-
+function checkTable(player, table)
+	local need = 0
+	local have = 0
+	for k, v in pairs (table) do 
+		need = need + 1
+		if Itemcheck(player, k, v, 'true') then have = have + 1  end
+	end
+	if need == have then
+		return true
+	else
+	end
+end
 function RemoveItem( item, amount) 
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
